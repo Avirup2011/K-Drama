@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Kdrama - All of Us Are Dead</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #0f1a0f 100%);
+      color: #e8f5e8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    .dark-green-bg {
+      background-color: #0d4d0d;
+    }
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      border: 1px solid #1a4d1a;
+      cursor: pointer;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+      border-color: #32cd32;
+    }
+    .rating-stars {
+      color: #ffd700;
+    }
+    .green-accent {
+      color: #32cd32;
+    }
+    .line-clamp-3 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    @media (max-width: 640px) {
+      .movie-grid {
+        grid-template-columns: 1fr;
+      }
+      .movie-card .poster-img {
+        height: auto;
+        max-height: 250px;
+      }
+      h1 {
+        font-size: 2.5rem;
+      }
+    }
+    @media (min-width: 641px) and (max-width: 1023px) {
+      .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .movie-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  </style>
+</head>
+<body class="p-4 md:p-8">
+  <header class="text-center mb-10">
+    <h1 class="text-4xl md:text-5xl font-bold text-white">Kdrama</h1>
+  </header>
+
+  <main class="max-w-7xl mx-auto">
+    <div id="movie-container" class="movie-grid grid gap-6">
+      <!-- Dynamic movie card -->
+    </div>
+  </main>
+
+  <script>
+    const movies = [
+      {
+        id: 1,
+        title: "All of Us Are Dead",
+        year: 2022,
+        rating: 9.6,
+        genre: "Zombie, Thriller",
+        overview: "A sudden zombie apocalypse overtakes a high school during a breakout, forcing survivors to band together and fight against the undead hordes threatening their lives in a desperate struggle for survival.",
+        posterAlt: "Zombie horror K-drama poster depicting a chaotic high school setting with terrified students fleeing bloodied zombies.",
+        posterUrl: "poster/All of us are dead.jpg",
+        pageUrl: "playlist/all of us are dead.html"
+      }
+    ];
+
+    const movieContainer = document.getElementById('movie-container');
+
+    function renderMovies(movieList) {
+      movieContainer.innerHTML = '';
+      movieList.forEach(movie => {
+        const card = document.createElement('div');
+        card.className = 'movie-card dark-green-bg card-hover rounded-lg overflow-hidden';
+        card.onclick = () => {
+          // Open the playlist page
+          window.location.href = movie.pageUrl;
+        };
+        card.innerHTML = `
+          <div class="relative">
+            <img src="${movie.posterUrl}" alt="${movie.posterAlt}" class="w-full h-48 md:h-56 object-cover poster-img" />
+            <div class="absolute top-2 right-2 bg-black bg-opacity-90 px-3 py-1 rounded-full text-sm rating-stars flex items-center gap-1">
+              ★ ${movie.rating}
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold mb-1 text-white green-accent">${movie.title}</h3>
+            <p class="text-sm text-gray-500 mb-2">${movie.year} • ${movie.genre}</p>
+            <p class="text-sm text-gray-300 line-clamp-3">${movie.overview}</p>
+          </div>
+        `;
+        movieContainer.appendChild(card);
+      });
+    }
+
+    renderMovies(movies);
+  </script>
+</body>
+</html>

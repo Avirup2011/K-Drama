@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>All of Us Are Dead - Episodes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #0f1a0f 100%);
+      color: #e8f5e8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    .dark-green-bg {
+      background-color: #0d4d0d;
+    }
+    .row-hover {
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      cursor: pointer;
+    }
+    .row-hover:hover {
+      background-color: rgba(50, 205, 50, 0.15);
+      transform: translateY(-2px);
+    }
+    .green-accent {
+      color: #32cd32;
+    }
+    .flex-shrink-0 img {
+      display: block;
+    }
+  </style>
+</head>
+<body class="p-4 md:p-8 flex justify-center">
+  <div class="w-full max-w-2xl">
+    <header class="text-center mb-6">
+      <h1 class="text-3xl md:text-4xl font-bold text-white">All of Us Are Dead</h1>
+      <p class="text-gray-400">Season 1 • 12 Episodes</p>
+    </header>
+
+    <main>
+      <div id="episode-container" class="flex flex-col gap-2">
+        <!-- Episodes will load here -->
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const episodes = [
+      { number: 1, title: "Episode 1", description: "The zombie outbreak begins inside the high school.", posterUrl: "../poster/All of us are dead.jpg", posterAlt: "All of Us Are Dead episode poster", videoUrl: "player.html?video=https://www.dailymotion.com/video/x91ohby" },
+      { number: 2, title: "Episode 2", description: "Survivors fight to escape the spreading infection.", posterUrl: "../poster/All of us are dead.jpg", posterAlt: "All of Us Are Dead episode poster", videoUrl: "player.html?video=https://www.dailymotion.com/video/x8r56xe" },
+      { number: 3, title: "Episode 3", description: "Episode 3 of All of Us Are Dead.", posterUrl: "../poster/All of us are dead.jpg", posterAlt: "All of Us Are Dead episode poster", videoUrl: "player.html?video=https://www.dailymotion.com/video/x8w06t4" },
+      { number: 4, title: "Episode 4", description: "Episode 4 of All of Us Are Dead.", posterUrl: "../poster/All of us are dead.jpg", posterAlt: "All of Us Are Dead episode poster", videoUrl: "player.html?video=https://www.dailymotion.com/video/x8wacp4" },
+      { number: 5, title: "Episode 5", description: "Episode 5 of All of Us Are Dead.", posterUrl: "../poster/All of us are dead.jpg", posterAlt: "All of Us Are Dead episode poster", videoUrl: "player.html?video=https://www.dailymotion.com/video/x8qvymb" },
+      { number: 6, title: "Episode 6", description: "Episode 6 of All of Us Are Dead.", posterUrl: "../poster/All of us are dead.jpg", posterAlt: "All of Us Are Dead episode poster", videoUrl: "player.html?video=https://www.dailymotion.com/video/x8r57h1" },
+      { number: 7, title: "Episode 7", description: "Episode 7 of All of Us Are Dead.", posterUrl: "../poster/All of us are dead.jpg", posterAlt: "All of Us Are Dead episode poster", videoUrl: "player.html?video=https://www.dailymotion.com/video/x8hnz6u" },
+      { number: 8, title: "Episode 8", description: "Episode 8 of All of Us Are Dead.", posterUrl: "../poster/All of us are dead.jpg", posterAlt: "All of Us Are Dead episode poster", videoUrl: "player.html?video=https://www.dailymotion.com/video/x8h25xx" },
+      { number: 9, title: "Episode 9", description: "Episode 9 of All of Us Are Dead.", posterUrl: "../poster/All of us are dead.jpg", posterAlt: "All of Us Are Dead episode poster", videoUrl: "player.html?video=https://www.dailymotion.com/video/x8qx03k" },
+      { number: 10, title: "Episode 10", description: "Episode 10 of All of Us Are Dead.", posterUrl: "../poster/All of us are dead.jpg", posterAlt: "All of Us Are Dead episode poster", videoUrl: "player.html?video=https://www.dailymotion.com/video/x913e3s" },
+      { number: 11, title: "Episode 11", description: "Episode 11 of All of Us Are Dead.", posterUrl: "../poster/All of us are dead.jpg", posterAlt: "All of Us Are Dead episode poster", videoUrl: "player.html?video=https://www.dailymotion.com/video/x8qx3bu" },
+      { number: 12, title: "Episode 12", description: "Episode 12 of All of Us Are Dead.", posterUrl: "../poster/All of us are dead.jpg", posterAlt: "All of Us Are Dead episode poster", videoUrl: "player.html?video=https://www.dailymotion.com/video/x8w2gm4" }
+    ];
+
+    const episodeContainer = document.getElementById('episode-container');
+
+    function renderEpisodes(epList) {
+      episodeContainer.innerHTML = '';
+      epList.forEach(ep => {
+        const row = document.createElement('div');
+        row.className = 'row-hover flex items-center gap-3 p-2 dark-green-bg rounded-lg';
+        row.innerHTML = `
+          <div class="flex-shrink-0 w-14 h-14 overflow-hidden rounded">
+            <img src="${ep.posterUrl}" alt="${ep.posterAlt}" class="w-full h-full object-cover" />
+          </div>
+          <div class="flex flex-col">
+            <h3 class="text-base font-semibold text-white green-accent">${ep.title}</h3>
+            <p class="text-xs text-gray-400">${ep.description}</p>
+          </div>
+        `;
+        if (ep.videoUrl) {
+          row.onclick = () => {
+            // Open player in fullscreen page
+            window.location.href = ep.videoUrl;
+          };
+        }
+        episodeContainer.appendChild(row);
+      });
+    }
+
+    renderEpisodes(episodes);
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Video Player</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      background: black;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <iframe id="videoFrame" allowfullscreen></iframe>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const videoUrl = urlParams.get('video');
+
+    if (videoUrl) {
+      // Convert normal Dailymotion URL to embed format
+      const embedUrl = videoUrl.replace("dailymotion.com/video", "dailymotion.com/embed/video");
+      document.getElementById("videoFrame").src = embedUrl;
+    } else {
+      document.body.innerHTML = "<p style='color:white'>No video found.</p>";
+    }
+  </script>
+</body>
+</html>
