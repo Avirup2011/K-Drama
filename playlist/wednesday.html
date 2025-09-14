@@ -21,34 +21,30 @@
     .dark-green-bg { background-color: #0d4d0d; }
     .season-buttons {
       display: flex;
-      flex-direction: row;
-      gap: 1.5rem;
+      gap: 0.5rem; /* smaller gap for mobile */
       justify-content: center;
-      flex-wrap: nowrap;
-      max-width: 700px;
+      flex-wrap: wrap; /* allows wrapping */
       width: 100%;
-      margin-bottom: 2.5rem;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 0.5rem;
+      margin-bottom: 2rem;
     }
     .card-hover {
-      flex: 1 1 0;
-      min-width: 180px;
+      flex: 0 0 45%; /* take 45% width */
+      min-width: auto;
+      max-width: 160px; /* keep them small */
       cursor: pointer;
       border: 2px solid #32cd32;
       border-radius: 0.75rem;
-      padding: 1rem;
+      padding: 0.5rem;
       text-align: center;
       font-weight: 700;
-      font-size: 1.5rem;
+      font-size: 1rem;
       color: #32cd32;
       transition: background-color 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
       user-select: none;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
+      gap: 0.5rem;
       background-color: transparent;
     }
     .card-hover:hover {
@@ -97,7 +93,7 @@
     }
     .season-image {
       width: 100%;
-      height: 160px;
+      height: 100px; /* smaller image */
       object-fit: cover;
       border-radius: 0.5rem;
       pointer-events: none;
