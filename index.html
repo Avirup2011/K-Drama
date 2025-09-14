@@ -3,16 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Drama - All of Us Are Dead</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
     /* Disable text selection for the whole page */
-body {
-  -webkit-user-select: none;  /* Safari/Chrome */
-  -moz-user-select: none;     /* Firefox */
-  -ms-user-select: none;      /* IE/Edge */
-  user-select: none;          /* Standard */
-}
+    body {
+      -webkit-user-select: none;  /* Safari/Chrome */
+      -moz-user-select: none;     /* Firefox */
+      -ms-user-select: none;      /* IE/Edge */
+      user-select: none;          /* Standard */
+    }
 
     body {
       background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #0f1a0f 100%);
@@ -69,9 +76,45 @@ body {
         grid-template-columns: repeat(4, 1fr);
       }
     }
+
+    /* Fullscreen toggle button styles */
+    #fullscreen-btn {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 50;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 0.25rem;
+      border-radius: 0.375rem; /* rounded-md */
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      transition: background-color 0.3s ease;
+    }
+    #fullscreen-btn:hover,
+    #fullscreen-btn:focus {
+      background-color: rgba(0, 0, 0, 0.8);
+      outline: none;
+    }
+    #fullscreen-icon {
+      width: 32px;
+      height: 32px;
+      user-select: none;
+      pointer-events: none;
+      object-fit: contain;
+    }
   </style>
 </head>
 <body class="p-4 md:p-8">
+
+  <!-- Fullscreen toggle button -->
+  <button id="fullscreen-btn" aria-label="Toggle Fullscreen" title="Toggle Fullscreen" type="button">
+    <img id="fullscreen-icon" src="https://cdn-icons-png.freepik.com/512/8373/8373465.png" alt="Enter Fullscreen" />
+  </button>
+
   <header class="text-center mb-10">
     <h1 class="text-4xl md:text-5xl font-bold text-white">Drama</h1>
   </header>
@@ -83,63 +126,111 @@ body {
   </main>
 
   <script>
-  const movies = [
-    {
-      id: 1,
-      title: "All of Us Are Dead",
-      year: 2022,
-      rating: 9.6,
-      genre: "Zombie, Thriller",
-      overview: "A sudden zombie apocalypse overtakes a high school during a breakout, forcing survivors to band together and fight against the undead hordes threatening their lives in a desperate struggle for survival.",
-      posterAlt: "Zombie horror K-drama poster depicting a chaotic high school setting with terrified students fleeing bloodied zombies.",
-      posterUrl: "https://cdn.wallpapersafari.com/91/43/c3eb9f.jpg",
-      pageUrl: "playlist/all of us are dead.html"
-    },
-    {
-      id: 2,
-      title: "Wednesday",
-      year: 2024,
-      rating: 8.7,
-      genre: "Mystery, Comedy, Drama",
-      overview: "Wednesday Addams navigates life at Nevermore Academy while solving mysteries and dealing with her psychic abilities.",
-      posterAlt: "Wednesday series poster featuring Wednesday Addams with a dark, mysterious background.",
-      posterUrl: "https://akm-img-a-in.tosshub.com/indiatoday/images/story/202507/netflix-release-wednesday-season-2-teaser-230452785-16x9.png?VersionId=.a9_W2IksFn8_Giq3vf3p1gET7XxLUP9&size=690:388",
-      pageUrl: "playlist/wednesday.html"
-    }
-  ];
+    const movies = [
+      {
+        id: 1,
+        title: "All of Us Are Dead",
+        year: 2022,
+        rating: 9.6,
+        genre: "Zombie, Thriller",
+        overview: "A sudden zombie apocalypse overtakes a high school during a breakout, forcing survivors to band together and fight against the undead hordes threatening their lives in a desperate struggle for survival.",
+        posterAlt: "Zombie horror K-drama poster depicting a chaotic high school setting with terrified students fleeing bloodied zombies.",
+        posterUrl: "https://cdn.wallpapersafari.com/91/43/c3eb9f.jpg",
+        pageUrl: "playlist/all of us are dead.html"
+      },
+      {
+        id: 2,
+        title: "Wednesday",
+        year: 2024,
+        rating: 8.7,
+        genre: "Mystery, Comedy, Drama",
+        overview: "Wednesday Addams navigates life at Nevermore Academy while solving mysteries and dealing with her psychic abilities.",
+        posterAlt: "Wednesday series poster featuring Wednesday Addams with a dark, mysterious background.",
+        posterUrl: "https://akm-img-a-in.tosshub.com/indiatoday/images/story/202507/netflix-release-wednesday-season-2-teaser-230452785-16x9.png?VersionId=.a9_W2IksFn8_Giq3vf3p1gET7XxLUP9&size=690:388",
+        pageUrl: "playlist/wednesday.html"
+      }
+    ];
 
-  const movieContainer = document.getElementById('movie-container');
+    const movieContainer = document.getElementById('movie-container');
 
-  function renderMovies(movieList) {
-    movieContainer.innerHTML = '';
-    movieList.forEach(movie => {
-      const card = document.createElement('div');
-      card.className = 'movie-card dark-green-bg card-hover rounded-lg overflow-hidden';
-      card.onclick = () => {
-        window.location.href = movie.pageUrl;
-      };
-      card.innerHTML = `
-        <div class="relative">
-          <img src="${movie.posterUrl}" alt="${movie.posterAlt}" class="w-full h-48 md:h-56 object-cover poster-img" />
-          <div class="absolute top-2 right-2 bg-black bg-opacity-90 px-3 py-1 rounded-full text-sm rating-stars flex items-center gap-1">
-            ★ ${movie.rating}
+    function renderMovies(movieList) {
+      movieContainer.innerHTML = '';
+      movieList.forEach(movie => {
+        const card = document.createElement('div');
+        card.className = 'movie-card dark-green-bg card-hover rounded-lg overflow-hidden';
+        card.onclick = () => {
+          window.location.href = movie.pageUrl;
+        };
+        card.innerHTML = `
+          <div class="relative">
+            <img src="${movie.posterUrl}" alt="${movie.posterAlt}" class="w-full h-48 md:h-56 object-cover poster-img" />
+            <div class="absolute top-2 right-2 bg-black bg-opacity-90 px-3 py-1 rounded-full text-sm rating-stars flex items-center gap-1">
+              ★ ${movie.rating}
+            </div>
           </div>
-        </div>
-        <div class="p-4">
-          <h3 class="text-lg font-semibold mb-1 text-white green-accent">${movie.title}</h3>
-          <p class="text-sm text-gray-500 mb-2">${movie.year} • ${movie.genre}</p>
-          <p class="text-sm text-gray-300 line-clamp-3">${movie.overview}</p>
-        </div>
-      `;
-      movieContainer.appendChild(card);
-    });
-  }
+          <div class="p-4">
+            <h3 class="text-lg font-semibold mb-1 text-white green-accent">${movie.title}</h3>
+            <p class="text-sm text-gray-500 mb-2">${movie.year} • ${movie.genre}</p>
+            <p class="text-sm text-gray-300 line-clamp-3">${movie.overview}</p>
+          </div>
+        `;
+        movieContainer.appendChild(card);
+      });
+    }
 
-  renderMovies(movies);
-</script>
+    renderMovies(movies);
+
+    // Fullscreen toggle button logic
+    const fsBtn = document.getElementById('fullscreen-btn');
+    const fsIcon = document.getElementById('fullscreen-icon');
+
+    const enterFullscreenSrc = "https://cdn-icons-png.freepik.com/512/8373/8373465.png";
+    const exitFullscreenSrc = "https://www.shareicon.net/data/2015/08/05/80592_exit_512x512.png";
+
+    function updateIcon(isFullscreen) {
+      if (isFullscreen) {
+        fsIcon.src = exitFullscreenSrc;
+        fsIcon.alt = "Exit Fullscreen";
+      } else {
+        fsIcon.src = enterFullscreenSrc;
+        fsIcon.alt = "Enter Fullscreen";
+      }
+    }
+
+    fsBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        } else if (document.documentElement.webkitRequestFullscreen) { /* Safari */
+          document.documentElement.webkitRequestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) { /* IE11 */
+          document.documentElement.msRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) { /* Safari */
+          document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { /* IE11 */
+          document.msExitFullscreen();
+        }
+      }
+    });
+
+    // Update icon on fullscreen change
+    document.addEventListener('fullscreenchange', () => {
+      updateIcon(!!document.fullscreenElement);
+    });
+    document.addEventListener('webkitfullscreenchange', () => {
+      updateIcon(!!document.webkitFullscreenElement);
+    });
+    document.addEventListener('msfullscreenchange', () => {
+      updateIcon(!!document.msFullscreenElement);
+    });
+
+    // Initialize icon state
+    updateIcon(!!document.fullscreenElement);
+  </script>
 
 </body>
 </html>
-
-
-
