@@ -126,6 +126,7 @@
   </main>
 
   <script>
+    // Movie data
     const movies = [
       {
         id: 1,
@@ -151,14 +152,20 @@
       }
     ];
 
+    // Render movie cards
     const movieContainer = document.getElementById('movie-container');
-
     function renderMovies(movieList) {
       movieContainer.innerHTML = '';
       movieList.forEach(movie => {
         const card = document.createElement('div');
         card.className = 'movie-card dark-green-bg card-hover rounded-lg overflow-hidden';
         card.onclick = () => {
+          // Before redirecting, store fullscreen state
+          if (document.fullscreenElement) {
+            localStorage.setItem('fullscreenActive', 'true');
+          } else {
+            localStorage.setItem('fullscreenActive', 'false');
+          }
           window.location.href = movie.pageUrl;
         };
         card.innerHTML = `
@@ -177,23 +184,24 @@
         movieContainer.appendChild(card);
       });
     }
-
     renderMovies(movies);
 
     // Fullscreen toggle button logic
     const fsBtn = document.getElementById('fullscreen-btn');
     const fsIcon = document.getElementById('fullscreen-icon');
 
-    const enterFullscreenSrc = "https://cdn-icons-png.freepik.com/512/8373/8373465.png";
-    const exitFullscreenSrc = "https://www.shareicon.net/data/2015/08/05/80592_exit_512x512.png";
+        const enterFullscreenSrc = "https://cdn-icons-png.freepik.com/512/8373/8373465.png";
+       const exitFullscreenSrc = "https://www.shareicon.net/data/2015/08/05/80592_exit_512x512.png";
 
     function updateIcon(isFullscreen) {
       if (isFullscreen) {
         fsIcon.src = exitFullscreenSrc;
         fsIcon.alt = "Exit Fullscreen";
+        localStorage.setItem('fullscreenActive', 'true');
       } else {
         fsIcon.src = enterFullscreenSrc;
         fsIcon.alt = "Enter Fullscreen";
+        localStorage.setItem('fullscreenActive', 'false');
       }
     }
 
@@ -230,6 +238,26 @@
 
     // Initialize icon state
     updateIcon(!!document.fullscreenElement);
+
+    // On page load, try to enter fullscreen if stored flag is true
+    window.addEventListener('load', () => {
+      if (localStorage.getItem('fullscreenActive') === 'true') {
+        const docEl = document.documentElement;
+        if (!document.fullscreenElement) {
+          if (docEl.requestFullscreen) {
+            docEl.requestFullscreen().catch(() => {
+              // Fullscreen request blocked by browser (likely no user gesture)
+              // Optionally show a manual fullscreen button here
+              console.log('Fullscreen request blocked by browser.');
+            });
+          } else if (docEl.webkitRequestFullscreen) {
+            docEl.webkitRequestFullscreen();
+          } else if (docEl.msRequestFullscreen) {
+            docEl.msRequestFullscreen();
+          }
+        }
+      }
+    });
   </script>
 
 </body>
