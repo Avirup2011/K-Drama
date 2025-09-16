@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Who are you school - Episodes</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+/* Disable text selection for the whole page */
+body {
+-webkit-user-select: none; /* Safari/Chrome */
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* IE/Edge */
+user-select: none; /* Standard */
+}
+
+body {
+background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #0f1a0f 100%);
+color: #e8f5e8;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+min-height: 100vh;
+margin: 0;
+padding: 0;
+}
+.dark-green-bg {
+background-color: #0d4d0d;
+}
+.row-hover {
+transition: background-color 0.3s ease, transform 0.2s ease;
+cursor: pointer;
+}
+.row-hover:hover {
+background-color: rgba(50, 205, 50, 0.15);
+transform: translateY(-2px);
+}
+.green-accent {
+color: #32cd32;
+}
+.flex-shrink-0 img {
+display: block;
+}
+</style>
+</head>
+<body class="p-4 md:p-8 flex justify-center">
+<div class="w-full max-w-2xl">
+<header class="text-center mb-6">
+<h1 class="text-3xl md:text-4xl font-bold text-white">Who are you school</h1>
+<p class="text-gray-400">Season 1 • 16 Episodes</p>
+</header>
+
+<main>
+<div id="episode-container" class="flex flex-col gap-2">
+<!-- Episodes will load here -->
+</div>
+</main>
+</div>
+
+<script>
+const episodes = [
+{ number: 1, title: "Episode 1", description: "Lee Eun‑bi, an orphan, faces bullying; her twin Eun‑byeol is missing.", posterUrl: "https://i.mydramalist.com/jqPyJf.jpg", posterAlt: "Who are you school episode poster", videoUrl: "https://www.dailymotion.com/video/x8n6039" },
+{ number: 2, title: "Episode 2", description: "Eun‑bi assumes Eun‑byeol’s identity at Se‑gang High School.", posterUrl: "https://i.mydramalist.com/jqPyJf.jpg", posterAlt: "Who are you school episode poster", videoUrl: "https://www.dailymotion.com/video/x8m938x" },
+{ number: 3, title: "Episode 3", description: "Eun‑bi adjusts to her new life and begins discovering secrets.", posterUrl: "https://i.mydramalist.com/jqPyJf.jpg", posterAlt: "Who are you school episode poster", videoUrl: "https://www.dailymotion.com/video/x8m93c4" },
+{ number: 4, title: "Episode 4", description: "Eun‑bi investigates Eun‑byeol’s disappearance; tension rises.", posterUrl: "https://i.mydramalist.com/jqPyJf.jpg", posterAlt: "Who are you school episode poster", videoUrl: "https://www.dailymotion.com/video/x8m93ig" },
+{ number: 5, title: "Episode 5", description: "New transfers bring trouble; Eun‑bi’s identity is at risk.", posterUrl: "https://i.mydramalist.com/jqPyJf.jpg", posterAlt: "Who are you school episode poster", videoUrl: "https://www.dailymotion.com/video/x8m93qo" },
+{ number: 6, title: "Episode 6", description: "Bullying escalates; Eun‑bi struggles with her past.", posterUrl: "https://i.mydramalist.com/jqPyJf.jpg", posterAlt: "Who are you school episode poster", videoUrl: "https://www.dailymotion.com/video/x8ma5zf" },
+{ number: 7, title: "Episode 7", description: "Eun‑bi looks for clues to Eun‑byeol’s disappearance.", posterUrl: "https://i.mydramalist.com/jqPyJf.jpg", posterAlt: "Who are you school episode poster", videoUrl: "https://www.dailymotion.com/video/x8ou18d" },
+{ number: 8, title: "Episode 8", description: "Suspicion grows; classmates notice something unusual.", posterUrl: "https://i.mydramalist.com/jqPyJf.jpg", posterAlt: "Who are you school episode poster", videoUrl: "https://www.dailymotion.com/video/x8mabzf" },
+{ number: 9, title: "Episode 9", description: "Eun‑bi confesses to Yi‑an that she isn’t Eun‑byeol.", posterUrl: "https://i.mydramalist.com/jqPyJf.jpg", posterAlt: "Who are you school episode poster", videoUrl: "http://dailymotion.com/video/x8mac3s" },
+{ number: 10, title: "Episode 10", description: "An accident occurs; conflict with So‑young intensifies.", posterUrl: "https://i.mydramalist.com/jqPyJf.jpg", posterAlt: "Who are you school episode poster", videoUrl: "https://www.dailymotion.com/video/x8mac62" },
+{ number: 11, title: "Episode 11", description: "Yi‑an recovers; Eun‑bi faces new challenges at school.", posterUrl: "https://i.mydramalist.com/jqPyJf.jpg", posterAlt: "Who are you school episode poster", videoUrl: "https://www.dailymotion.com/video/x8n38ar" },
+{ number: 12, title: "Episode 12", description: "Identity secrets emerge; Eun‑bi gets unexpected help.", posterUrl: "https://i.mydramalist.com/jqPyJf.jpg", posterAlt: "Who are you school episode poster", videoUrl: "https://www.dailymotion.com/video/x8n37uo" },
+{ number: 13, title: "Episode 13", description: "Eun‑byeol returns; major revelations and decisions occur.", posterUrl: "https://i.mydramalist.com/jqPyJf.jpg", posterAlt: "Who are you school episode poster", videoUrl: "https://www.dailymotion.com/video/x8n37sf" },
+{ number: 14, title: "Episode 14", description: "Tae‑gwang uncovers manipulations; Eun‑bi seeks answers.", posterUrl: "https://i.mydramalist.com/jqPyJf.jpg", posterAlt: "Who are you school episode poster", videoUrl: "https://www.dailymotion.com/video/x8n379f" },
+{ number: 15, title: "Episode 15", description: "Emotional turning points; class/school secrets revealed.", posterUrl: "https://i.mydramalist.com/jqPyJf.jpg", posterAlt: "Who are you school episode poster", videoUrl: "https://www.dailymotion.com/video/x8n2upq" },
+{ number: 16, title: "Episode 16 (Final)", description: "Conclusion: paths resolved; romantic and personal arcs end.", posterUrl: "https://i.mydramalist.com/jqPyJf.jpg", posterAlt: "Who are you school episode poster", videoUrl: "https://www.dailymotion.com/video/x8mbe99" }
+];
+
+const episodeContainer = document.getElementById('episode-container');
+
+function renderEpisodes(epList) {
+episodeContainer.innerHTML = '';
+epList.forEach(ep => {
+const row = document.createElement('div');
+row.className = 'row-hover flex items-center gap-3 p-2 dark-green-bg rounded-lg';
+row.innerHTML = `
+<div class="flex-shrink-0 w-14 h-14 overflow-hidden rounded">
+<img src="${ep.posterUrl}" alt="${ep.posterAlt}" class="w-full h-full object-cover" />
+</div>
+<div class="flex flex-col">
+<h3 class="text-base font-semibold text-white green-accent">${ep.title}</h3>
+<p class="text-xs text-gray-400">${ep.description}</p>
+</div>
+`;
+if (ep.videoUrl) {
+row.onclick = () => {
+// Open player page with video URL as query param
+// Here we redirect directly to the video URL as given
+window.location.href = ep.videoUrl;
+};
+}
+episodeContainer.appendChild(row);
+});
+}
+
+renderEpisodes(episodes);
+</script>
+</body>
+</html>
