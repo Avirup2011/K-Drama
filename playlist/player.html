@@ -15,43 +15,16 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-    }
-    #video-container {
-      position: relative;
-      width: 100%;
-      max-width: 960px;
-      height: 540px; /* 16:9 aspect ratio */
-      background: black;
     }
     iframe {
       width: 100%;
       height: 100%;
       border: none;
-      display: block;
-    }
-    #fullscreen-btn {
-      margin-top: 12px;
-      padding: 8px 16px;
-      background-color: #32cd32;
-      color: black;
-      font-weight: bold;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      user-select: none;
-      transition: background-color 0.3s ease;
-    }
-    #fullscreen-btn:hover {
-      background-color: #28a428;
     }
   </style>
 </head>
 <body>
-  <div id="video-container">
-    <iframe id="videoFrame" allowfullscreen allow="fullscreen"></iframe>
-  </div>
-  <button id="fullscreen-btn" aria-label="Enter Fullscreen">Fullscreen</button>
+  <iframe id="videoFrame" allowfullscreen allow="fullscreen"></iframe>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
@@ -62,34 +35,8 @@
       const embedUrl = videoUrl.replace("dailymotion.com/video", "dailymotion.com/embed/video");
       document.getElementById("videoFrame").src = embedUrl;
     } else {
-      document.body.innerHTML = "<p style='color:white; font-size: 1.2rem;'>No video found.</p>";
+      document.body.innerHTML = "<p style='color:white'>No video found.</p>";
     }
-
-    const fullscreenBtn = document.getElementById('fullscreen-btn');
-    const videoContainer = document.getElementById('video-container');
-
-    fullscreenBtn.addEventListener('click', () => {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      } else {
-        if (videoContainer.requestFullscreen) {
-          videoContainer.requestFullscreen();
-        } else if (videoContainer.webkitRequestFullscreen) { /* Safari */
-          videoContainer.webkitRequestFullscreen();
-        } else if (videoContainer.msRequestFullscreen) { /* IE11 */
-          videoContainer.msRequestFullscreen();
-        }
-      }
-    });
-
-    // Optional: Change button text based on fullscreen state
-    document.addEventListener('fullscreenchange', () => {
-      if (document.fullscreenElement) {
-        fullscreenBtn.textContent = 'Exit Fullscreen';
-      } else {
-        fullscreenBtn.textContent = 'Fullscreen';
-      }
-    });
   </script>
 </body>
 </html>
